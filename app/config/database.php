@@ -69,14 +69,21 @@ $db['default'] = [
     'username'     => 'smawhm_smadb',
     'password'     => 'aMg2021*',
     'database'     => 'smawhm_smadb',
+
+
+   // 'hostname'     => 'localhost',
+   // 'username'     => 'smadb',
+   // 'password'     => 'aMg2021*',
+   // 'database'     => 'smadempdb',
+
     'dbdriver'     => 'mysqli',
     'dbprefix'     => 'sma_',
     'pconnect'     => false,
     'db_debug'     => false,
     'cache_on'     => false,
     'cachedir'     => '',
-    'char_set'     => 'utf8',
-    'dbcollat'     => 'utf8_general_ci',
+    'char_set'     => 'utf8mb4',
+    'dbcollat'     => 'utf8mb4_general_ci',
     'swap_pre'     => '',
     'encrypt'      => false,
     'compress'     => false,
