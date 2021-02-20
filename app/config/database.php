@@ -70,12 +70,6 @@ $db['default'] = [
     'password'     => 'aMg2021*',
     'database'     => 'smawhm_smadb',
 
-
-   // 'hostname'     => 'localhost',
-   // 'username'     => 'smadb',
-   // 'password'     => 'aMg2021*',
-   // 'database'     => 'smadempdb',
-
     'dbdriver'     => 'mysqli',
     'dbprefix'     => 'sma_',
     'pconnect'     => false,
@@ -91,3 +85,15 @@ $db['default'] = [
     'failover'     => [],
     'save_queries' => false,
 ];
+
+// Host จริง
+// 'hostname'     => '148.66.131.31',
+// 'username'     => 'smawhm_smadb',
+// 'password'     => 'aMg2021*',
+// 'database'     => 'smawhm_smadb',
+
+// demo
+// 'hostname'     => 'localhost',
+// 'username'     => 'smadb',
+// 'password'     => 'aMg2021*',
+// 'database'     => 'smademodb',
