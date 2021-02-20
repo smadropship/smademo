@@ -65,10 +65,10 @@ $query_builder = true;
 
 $db['default'] = [
     'dsn'          => '',
-    'hostname'     => 'localhost',
-    'username'     => 'smadb',
+    'hostname'     => '148.66.131.31',
+    'username'     => 'smawhm_smadb',
     'password'     => 'aMg2021*',
-    'database'     => 'smademodb',
+    'database'     => 'smawhm_smadb',
     'dbdriver'     => 'mysqli',
     'dbprefix'     => 'sma_',
     'pconnect'     => false,
