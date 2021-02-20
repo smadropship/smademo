@@ -124,11 +124,160 @@
                                                         </span>
                                                     </label>
                                                 </div>
+                                                
+                                                <div class="col-md-12">
+                                                    <h5><strong><?= lang('logis_method'); ?></strong></h5>
+                                                    <hr>
+                                                    <div class="checkbox bg">
+                                                    <?php    foreach ($logistics as $logistic) {
+                                        ?>
+
+                                                        <label style="display: inline-block; width: auto;">
+                                                            <input type="radio" name="logistic_method" value="<?= $logistic->logistic_name; ?>" id="<?=$logistic->logistic_name;?>" required="required">
+                                                            <span>
+                                                                <i class="fa fa-paypal margin-right-md"></i> <?=$logistic->logistic_name;?>
+                                                            </span>
+                                                        </label>
+                                                  
+                                                        <?php    }
+                                        ?>
+
+                                                     
+                                                    </div>
+                                                </div>
+                                                
+<script>
+  $(".shipping_method").click(function(event) {    
+
+
+// weight : น้ำหนัก หน่วยกรัม
+// pluskerry : ค่าที่เพิ่มขอบ kerry
+// plusflash : ค่าที่เพิ่มของ flash
+const calulatePriceFWeight = function(weight,plusems,plusflash){
+  var result = {'flash':0,'ems':0};
+  var weightlist = [
+    {'weight':250,'cost':20},
+    {'weight':500,'cost':25},
+    {'weight':1000,'cost':50},
+    {'weight':1500,'cost':60},
+    {'weight':2000,'cost':70},
+    {'weight':2500,'cost':120},
+    {'weight':3000,'cost':130},
+    {'weight':3500,'cost':150},
+    {'weight':4000,'cost':160},
+    {'weight':4500,'cost':190},
+    {'weight':5000,'cost':210},
+    {'weight':5500,'cost':240},
+    {'weight':6000,'cost':260},
+    {'weight':6500,'cost':290},
+    {'weight':7000,'cost':310},
+    {'weight':7500,'cost':340},
+    {'weight':8000,'cost':360},
+    {'weight':8500,'cost':390},
+    {'weight':9000,'cost':420},
+    {'weight':9500,'cost':450},
+    {'weight':10000,'cost':480},
+    {'weight':11000,'cost':500},
+    {'weight':12000,'cost':510},
+    {'weight':13000,'cost':530},
+    {'weight':14000,'cost':540},
+    {'weight':15000,'cost':560},
+    {'weight':16000,'cost':570},
+    {'weight':17000,'cost':590},
+    {'weight':18000,'cost':600},
+    {'weight':19000,'cost':620},
+    {'weight':20000,'cost':630}]
+  for(let k in weightlist){
+    if(weight<=weightlist[k].weight){
+      result.flash = weightlist[k].cost + plusflash;
+      result.ems = weightlist[k].cost + plusems;
+      break;
+    }
+  }
+  return result;
+};
+var res = calulatePriceFWeight(700,5,0);
+
+var fee = 0;
+// var fl = 40;
+if($(this).val()=="postems"){
+fee = res.ems;
+
+}else if($(this).val()=="dropoff"){
+fee = 10;
+}else if($(this).val()=="flash"){
+fee = res.flash;
+}else{
+fee = 0;
+}
+
+    $("#shipping_fee").html("฿"+ fee.toFixed(2))
+    var total = $("#total").text().match(/\d+/)[0]
+    var grand_total = parseFloat(fee) + parseFloat(total)
+    $("#grand_total").html("฿"+ grand_total.toFixed(2))
+  });
+</script>
+
+                                                <h5><strong>
+                                                    <?= lang('เลือกรูปแบบจัดส่ง'); ?> </strong></h5>
+                                            <div class="checkbox bg">
+                                                <p> <label style="display: inline-block; width: 60%;">
+                                                        <input type="radio" name="shipping_method" value="postems"
+                                                            class="shipping_method" id="postems">
+                                                        <span>
+                                                            <i class="fa fa-truck margin-right-md"></i>
+                                                            <?= lang('พัสดุ EMS') ?>
+                                                        </span>
+                                                    </label></p>
+
+
+                                                <p> <label style="display: inline-block; width: 60%;">
+                                                        <input type="radio" name="shipping_method" value="flash"
+                                                            class="shipping_method" id="flash">
+                                                        <span>
+                                                            <i class="fa fa-truck margin-right-md"></i>
+                                                            <?='FLASH EXPRESS'?>
+                                                        </span>
+                                                    </label></p>
+
+
+                                              <!--  <label style="display: inline-block; width: 60%;">
+                                                    <input type="radio" name="shipping_method" value="dropoff"
+                                                        class="shipping_method" id="dropoff">
+                                                    <span>
+                                                        <i class="fa fa-truck margin-right-md"></i>
+                                                        <?= lang('DropOff(DHLDomestic/Kerry/J&T) : 10 บาท') ?>
+                                                        <?= form_input('doreferenceno', set_value('doreferenceno'), 'class="form-control tip" id="doreferenceno" maxlength=25 placeholder="SDOxx/KEDOxx*/677*ไม่มีเลขจะถูกยกเลิก*"'); ?>
+                                                    </span> </label>        -->                              
+                                       </p>
+                                     
+                  
+                  
+                      
+
+                                            <!--    <p> <label style="display: inline-block; width: 60%;">
+                                                        <input type="radio" name="shipping_method" value="service"
+                                                            class="shipping_method" id="service">
+                                                        <span>
+                                                            <i class="fa fa-truck margin-right-md"></i>บริการ/เช่น
+                                                            แต่งร้าน
+                                                        </span> </label></p>-->
+                                            </div>
                                                 <hr>
                                                 <div class="form-group">
                                                     <?= lang('comment_any', 'comment'); ?>
                                                     <?= form_textarea('comment', set_value('comment'), 'class="form-control" id="comment" style="height:100px;"'); ?>
                                                 </div>
+
+
+                                                <div class="form-group">
+                                                    <?= lang('ผู้รับ', 'ผู้รับ'); ?>
+                                                    <?= form_textarea('comment', set_value('comment'), 'class="form-control" id="comment" style="height:100px;"'); ?>
+                                                </div>
+
+
+
+
                                                 <?php
                                                 if (!empty($addresses) && !$this->Staff) {
                                                     echo form_submit('add_order', lang('submit_order'), 'class="btn btn-theme"');
@@ -358,6 +507,8 @@
                                                         </label>
                                                     </div>
                                                 </div>
+
+
 
                                             </div>
                                             <?= form_submit('guest_order', lang('submit'), 'class="btn btn-lg btn-primary"'); ?>

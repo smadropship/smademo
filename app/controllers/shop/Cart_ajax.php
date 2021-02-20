@@ -104,6 +104,7 @@ class Cart_ajax extends MY_Shop_Controller
             $this->session->set_flashdata('reminder', lang('cart_is_empty'));
             shop_redirect('products');
         }
+        $this->data['logistics']  = $this->shop_model->getAllLogistic();
         $this->data['paypal']     = $this->shop_model->getPaypalSettings();
         $this->data['skrill']     = $this->shop_model->getSkrillSettings();
         $this->data['addresses']  = $this->loggedIn ? $this->shop_model->getAddresses() : false;

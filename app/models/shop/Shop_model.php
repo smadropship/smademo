@@ -17,6 +17,19 @@ class Shop_model extends CI_Model
         return false;
     }
 
+    public function getAllLogistic()
+    {
+        $q = $this->db->get('logistics');
+        if ($q->num_rows() > 0) {
+            foreach (($q->result()) as $row) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+        return false;
+    }
+
+
     public function addSale($data, $items, $customer, $address)
     {
         $cost = $this->site->costing($items);

@@ -243,5 +243,6 @@ $(document).ready(function() {
         store('shop_grid', '.three-col');
     }
 </script> -->
+
 </body>
 </html>

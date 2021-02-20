@@ -155,6 +155,7 @@ class Shop extends MY_Shop_Controller
     // Add new Order form shop
     public function order()
     {
+        $this->data['logistics']  = $this->shop_model->getAllLogistic();
         $guest_checkout = $this->input->post('guest_checkout');
         if (!$guest_checkout && !$this->loggedIn) {
             redirect('login');
@@ -366,6 +367,7 @@ class Shop extends MY_Shop_Controller
             }
         } else {
             $this->session->set_flashdata('error', validation_errors());
+            
             redirect('cart/checkout' . ($guest_checkout ? '#guest' : ''));
         }
     }
@@ -389,7 +391,9 @@ class Shop extends MY_Shop_Controller
             $msg     = file_get_contents('./themes/' . $this->Settings->theme . '/admin/views/email_templates/sale.html');
             $message = $this->parser->parse_string($msg, $parse_data);
             $this->load->model('pay_model');
+            
             $paypal   = $this->pay_model->getPaypalSettings();
+            $this->data['logistics']  = $this->shop_model->getAllLogistic();
             $skrill   = $this->pay_model->getSkrillSettings();
             $btn_code = '<div id="payment_buttons" class="text-center margin010">';
             if (!empty($this->shop_settings->bank_details)) {
@@ -459,6 +463,7 @@ class Shop extends MY_Shop_Controller
                 $this->data['address']     = $this->shop_model->getAddressByID($order->address_id);
                 $this->data['return_sale'] = $order->return_id ? $this->shop_model->getOrder(['id' => $id]) : null;
                 $this->data['return_rows'] = $order->return_id ? $this->shop_model->getOrderItems($order->return_id) : null;
+                $this->data['logistics']  = $this->shop_model->getAllLogistic();
                 $this->data['paypal']      = $this->shop_model->getPaypalSettings();
                 $this->data['skrill']      = $this->shop_model->getSkrillSettings();
                 $this->data['page_title']  = lang('view_order');
@@ -731,4 +736,16 @@ class Shop extends MY_Shop_Controller
         $this->data['page_desc']  = '';
         $this->page_construct('pages/wishlist', $this->data);
     }
+
+    public function test1($company_id=null)
+    {
+       
+        
+        $this->data['logistics']  = $this->shop_model->getAllLogistic();
+        $this->data['addresses']  = $this->shop_model->getAddresses($company_id);
+        $this->data['page_title'] = lang('testasdfawerwaqr');
+        $this->data['page_desc']  = '';
+        $this->page_construct('pages/test1', $this->data);
+    }
+
 }
