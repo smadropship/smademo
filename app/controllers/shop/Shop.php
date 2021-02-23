@@ -152,10 +152,10 @@ class Shop extends MY_Shop_Controller
         }
     }
 
-    // Add new Order form shop
+    // Add new Order form shop    ////coding-------------------------------------------------------------------------------------------
     public function order()
     {
-        $this->data['logistics']  = $this->shop_model->getAllLogistic();
+    
         $guest_checkout = $this->input->post('guest_checkout');
         if (!$guest_checkout && !$this->loggedIn) {
             redirect('login');
@@ -163,6 +163,7 @@ class Shop extends MY_Shop_Controller
         $this->form_validation->set_rules('address', lang('address'), 'trim|required');
         $this->form_validation->set_rules('note', lang('comment'), 'trim');
         $this->form_validation->set_rules('payment_method', lang('payment_method'), 'required');
+        $this->form_validation->set_rules('logistic_method', lang('logistic_method'), 'required');
         if ($guest_checkout) {
             $this->form_validation->set_rules('name', lang('name'), 'trim|required');
             $this->form_validation->set_rules('email', lang('email'), 'trim|required|valid_email');
@@ -332,6 +333,7 @@ class Shop extends MY_Shop_Controller
                     'address_id'        => ($this->input->post('address') == 'new') ? '' : $address->id,
                     'hash'              => hash('sha256', microtime() . mt_rand()),
                     'payment_method'    => $this->input->post('payment_method'),
+                    'logistic_method'   => $this->input->post('logistic_method'),
                 ];
                 if ($this->Settings->invoice_view == 2) {
                     $data['cgst'] = $total_cgst;
@@ -393,7 +395,7 @@ class Shop extends MY_Shop_Controller
             $this->load->model('pay_model');
             
             $paypal   = $this->pay_model->getPaypalSettings();
-            $this->data['logistics']  = $this->shop_model->getAllLogistic();
+        
             $skrill   = $this->pay_model->getSkrillSettings();
             $btn_code = '<div id="payment_buttons" class="text-center margin010">';
             if (!empty($this->shop_settings->bank_details)) {
@@ -463,11 +465,12 @@ class Shop extends MY_Shop_Controller
                 $this->data['address']     = $this->shop_model->getAddressByID($order->address_id);
                 $this->data['return_sale'] = $order->return_id ? $this->shop_model->getOrder(['id' => $id]) : null;
                 $this->data['return_rows'] = $order->return_id ? $this->shop_model->getOrderItems($order->return_id) : null;
-                $this->data['logistics']  = $this->shop_model->getAllLogistic();
+                $this->data['logistic_method']  = $this->shop_model->getAllLogistic();
                 $this->data['paypal']      = $this->shop_model->getPaypalSettings();
                 $this->data['skrill']      = $this->shop_model->getSkrillSettings();
                 $this->data['page_title']  = lang('view_order');
                 $this->data['page_desc']   = '';
+
 
                 $this->config->load('payment_gateways');
                 $this->data['stripe_secret_key']      = $this->config->item('stripe_secret_key');
@@ -515,6 +518,7 @@ class Shop extends MY_Shop_Controller
             $this->data['page_desc']  = '';
             $this->page_construct('pages/orders', $this->data);
         }
+    
     }
 
     // Display Page

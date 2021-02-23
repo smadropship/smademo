@@ -11,7 +11,7 @@
                             <div class="panel-heading text-bold">
                             <i class="fa fa-list-alt margin-right-sm"></i> <?= lang('view_order') . ($inv ? ' (' . $inv->reference_no . ')' : ''); ?>
                             <?= $this->loggedIn ? '<a href="' . shop_url('orders') . '" class="pull-right"><i class="fa fa-share"></i> ' . lang('my_orders') . '</a>' : ''; ?>
-                            <a href="<?= shop_url('orders?download=' . $inv->id . ($this->loggedIn ? '' : '&hash=' . $inv->hash)); ?>" class="pull-right" style="margin-right:10px;"><i class="fa fa-download"></i> <?= lang('download'); ?></a>
+                            <!-- <a href="<?= shop_url('orders?download=' . $inv->id . ($this->loggedIn ? '' : '&hash=' . $inv->hash)); ?>" class="pull-right" style="margin-right:10px;"><i class="fa fa-download"></i> <?= lang('download'); ?></a> -->
                             </div>
                             <div class="panel-body mprint">
 
@@ -69,6 +69,7 @@
                                     } ?>
                                                 <?= lang('sale_status'); ?>: <?= lang($inv->sale_status); ?><br>
                                                 <?= lang('payment_status'); ?>: <?= lang($inv->payment_status); ?><br>
+                                                <?= lang('logistic_method'); ?>: <?= lang($inv->logistic_method); ?><br>
                                                 <?= lang('payment_method'); ?>: <?= lang($inv->payment_method); ?>
                                             </p>
                                         </div>
@@ -126,11 +127,13 @@
                                         <h2 style="margin-top:10px;"><?= $customer->company && $customer->company != '-' ? $customer->company : $customer->name; ?></h2>
                                         <?= $customer->company ? '' : 'Attn: ' . $customer->name ?>
                                         <p>
-                                            <?= $address->line1; ?><br>
-                                            <?= $address->line2; ?><br>
-                                            <?= $address->city; ?> <?= $address->state; ?><br>
-                                            <?= $address->postal_code; ?> <?= $address->country; ?><br>
-                                            <?= lang('phone') . ': ' . $address->phone; ?>
+                                            <?= lang('ชื่อ-นามสกุล ') . ': ' . $address->line1; ?><br>
+                                            <?= lang('ที่อยู่ ') . ': ' . $address->line2; ?><br>
+                                            <?= lang('จังหวัด ') . ': ' . $address->city; ?> 
+                                            <?= lang('อำเภอ ') . ': ' . $address->state; ?><br>
+                                            <?= lang('ไปรษณี ') . ': ' . $address->postal_code; ?> 
+                                            <?= lang('ประเทศ ') . ': ' . $address->country; ?><br>
+                                            <?= lang('เบอร์โทร ') . ': ' . $address->phone; ?>
                                         </p>
                                     </div>
                                     <?php

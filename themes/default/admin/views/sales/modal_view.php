@@ -32,7 +32,8 @@
     } ?>
                         <?= lang('sale_status'); ?>: <?= lang($inv->sale_status); ?><br>
                         <?= lang('payment_status'); ?>: <?= lang($inv->payment_status); ?><br>
-                        <?= $inv->payment_method ? lang('payment_method') . ': ' . lang($inv->payment_method) : ''; ?>
+                        <?= $inv->logistic_method ? lang('ขนส่ง') . ': ' . lang($inv->logistic_method) : ''; ?><br>
+                        <?= $inv->payment_method ? lang('ประเภทชำระ') . ': ' . lang($inv->payment_method) : ''; ?><br>
                         <?php
                         if ($inv->payment_status != 'paid' && $inv->due_date) {
                             echo '<br>' . lang('due_date') . ': ' . $this->sma->hrsd($inv->due_date);
