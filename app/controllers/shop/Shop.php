@@ -1,5 +1,7 @@
 <?php
 
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx\SheetViews;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Shop extends MY_Shop_Controller
@@ -36,14 +38,16 @@ class Shop extends MY_Shop_Controller
                 $this->sma->send_json(['status' => 'error', 'message' => lang('already_have_max_addresses'), 'level' => 'error']);
             }
 
-            $data = ['line1'  => $this->input->post('line1'),
+            $data = [
+                'line1'  => $this->input->post('line1'),
                 'line2'       => $this->input->post('line2'),
                 'phone'       => $this->input->post('phone'),
                 'city'        => $this->input->post('city'),
                 'state'       => $this->input->post('state'),
                 'postal_code' => $this->input->post('postal_code'),
                 'country'     => $this->input->post('country'),
-                'company_id'  => $this->session->userdata('company_id'), ];
+                'company_id'  => $this->session->userdata('company_id'),
+            ];
 
             if ($id) {
                 $this->db->update('addresses', $data, ['id' => $id]);
@@ -155,7 +159,7 @@ class Shop extends MY_Shop_Controller
     // Add new Order form shop    ////coding-------------------------------------------------------------------------------------------
     public function order()
     {
-    
+
         $guest_checkout = $this->input->post('guest_checkout');
         if (!$guest_checkout && !$this->loggedIn) {
             redirect('login');
@@ -369,7 +373,7 @@ class Shop extends MY_Shop_Controller
             }
         } else {
             $this->session->set_flashdata('error', validation_errors());
-            
+
             redirect('cart/checkout' . ($guest_checkout ? '#guest' : ''));
         }
     }
@@ -393,9 +397,9 @@ class Shop extends MY_Shop_Controller
             $msg     = file_get_contents('./themes/' . $this->Settings->theme . '/admin/views/email_templates/sale.html');
             $message = $this->parser->parse_string($msg, $parse_data);
             $this->load->model('pay_model');
-            
+
             $paypal   = $this->pay_model->getPaypalSettings();
-        
+
             $skrill   = $this->pay_model->getSkrillSettings();
             $btn_code = '<div id="payment_buttons" class="text-center margin010">';
             if (!empty($this->shop_settings->bank_details)) {
@@ -518,7 +522,6 @@ class Shop extends MY_Shop_Controller
             $this->data['page_desc']  = '';
             $this->page_construct('pages/orders', $this->data);
         }
-    
     }
 
     // Display Page
@@ -741,15 +744,151 @@ class Shop extends MY_Shop_Controller
         $this->page_construct('pages/wishlist', $this->data);
     }
 
-    public function test1($company_id=null)
+    public function test1($company_id = null)
     {
-       
-        
         $this->data['logistics']  = $this->shop_model->getAllLogistic();
         $this->data['addresses']  = $this->shop_model->getAddresses($company_id);
         $this->data['page_title'] = lang('testasdfawerwaqr');
         $this->data['page_desc']  = '';
         $this->page_construct('pages/test1', $this->data);
     }
+    //---------------------------------------------------------------address logistic 
+    public function logistic()
+    {
+        $this->data['page_title'] = lang('logistic');
+        $this->page_construct('pages/list_logistic', $this->data);
+    }
 
+    public function howtosend()
+    {
+        $this->data['page_title'] = lang('How to logistic');
+        $this->page_construct('pages/send', $this->data);
+    }
+
+    public function howtotopup()
+    {
+        $this->data['page_title'] = lang('How to Topup');
+        $this->page_construct('pages/topup', $this->data);
+    }
+
+    public function address_logistic($company_id = null)
+    {
+        if (!$this->loggedIn) {
+            redirect('login');
+        }
+        if ($this->Staff) {
+            admin_redirect('customers');
+        }
+        $this->data['page_title'] = lang('logistic');
+        $this->data['address_logistics']  = $this->shop_model->getAddress_logistic($company_id);
+        $this->page_construct('pages/address_logistic', $this->data);
+    }
+
+    public function address_receiver($company_id = null)
+    {
+        if (!$this->loggedIn) {
+            redirect('login');
+        }
+        if ($this->Staff) {
+            admin_redirect('customers');
+        }
+        $this->data['page_title'] = lang('logistic');
+        $this->data['address_receivers'] = $this->shop_model->getAddress_receiver($company_id);
+        $this->page_construct('pages/address_receive', $this->data);
+    }
+
+    public function addaddress_logistic()
+    {
+
+        $this->data['page_title'] = lang('logistic');
+        $this->page_construct('pages/creataddress_logistic', $this->data);
+    }
+
+    public function addaddress_receiver()
+    {
+        $this->data['page_title'] = lang('receives');
+        $this->page_construct('pages/creataddress_receiver', $this->data);
+    }
+    public function addlist_address($company_id = null)
+    {
+        $this->data['page_title'] = lang('logistic');
+        $this->data['address_receivers'] = $this->shop_model->getAddress_receiver($company_id);
+        $this->data['address_logistics'] = $this->shop_model->getAddress_logistic($company_id);
+        $this->page_construct('pages/creatlist_logistic', $this->data);
+    }
+
+    public function creat_address()
+    {
+        $data = array(
+            'name' => $this->input->post('name'),
+            'phone_number' => $this->input->post('phone_number'),
+            'phone_number' => $this->input->post('phone_number'),
+            'address'      => $this->input->post('address'),
+            'postal_code'  => $this->input->post('postal_code'),
+            'company_id'  => $this->session->userdata('company_id'),
+        );
+        //  echo json_encode($data);
+
+        //  $this->Customer_Model->insert($data); 
+
+        //  redirect('customer/index');
+
+
+        // echo 'test';
+
+        // $data = [
+        //     'name'       => 'test',
+        //     'company_id' => 1,
+
+        // ];
+
+        $this->db->insert('address_logistic', $data);
+        // $this->page_construct('pages/creataddress_logistic', $this->data);
+        //  echo json_encode($address_logistic);
+        redirect('shop/address_logistic');
+        // $this->page_construct('pages/logistic', $this->data);
+    }
+
+    public function creat_address_receiver()
+    {
+        $data = array(
+            'name' => $this->input->post('name'),
+            'phone_number' => $this->input->post('phone_number'),
+            'phone_number' => $this->input->post('phone_number'),
+            'address'      => $this->input->post('address'),
+            'postal_code'  => $this->input->post('postal_code'),
+            'company_id'  => $this->session->userdata('company_id'),
+        );
+
+        $this->db->insert('address_receiver', $data);
+        redirect('shop/address_receiver');
+    }
+
+    public function delete_receiver()
+    {
+        $id = $this->uri->segment('3');
+        $this->db->delete("address_receiver", "id = " . $id);
+        redirect('shop/address_receiver');
+    }
+
+    public function delete_address()
+    {
+
+        // echo $id;
+        // $id = $this->input->get('id');
+        // $this->Shop_model->delete_address($id);
+        // echo "Date deleted successfully !";
+
+        $id = $this->uri->segment('3');
+        $this->db->delete("address_logistic", "id = " . $id);
+        redirect('shop/address_logistic');
+        // $this->Shop_Model->delete_address($id); 
+        // $this->load->view('shop/logistic');
+
+    }
+    public function listAddress()
+    {
+        echo 'test';
+    }   
+    
 }

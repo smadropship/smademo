@@ -39,14 +39,14 @@
                                                 if (!empty($addresses)) {
                                                     echo shop_form_open('order', 'class="validate"');
                                                     echo '<div class="row">';
-                                                    echo '<div class="col-sm-12 text-bold">' . lang('ที่อยู่ผู้ส่ง') . '</div>';
+                                                    echo '<div class="col-sm-12 text-bold">' . lang('ที่อยู่ผู้รับ') . '</div>';
                                                     $r = 1;
                                                     foreach ($addresses as $address) {
                                             ?>
                                                         <div class="col-sm-6">
                                                             <div class="checkbox bg">
                                                                 <label>
-                                                                    <input type="radio" name="address" value="<?= $address->id; ?>" <?= $r == 1 ? 'checked' : ''; ?>>
+                                                                    <input type="radio" name="address" value="<?= $address->id; ?>" >
                                                                     <span>
                                                                         <?= $address->line1; ?><br>
                                                                         <?= $address->line2; ?><br>
@@ -136,7 +136,6 @@
                                                                 <i class="fa fa-truck margin-right-md"></i> <?= $logistic->logistic_name; ?>
                                                             </span>
                                                         </label>
-
                                                     <?php    }
                                                     ?>
                                                 </div>
@@ -145,9 +144,7 @@
                                                     <?= lang('comment_any', 'comment'); ?>
                                                     <?= form_textarea('comment', set_value('comment'), 'class="form-control" id="comment" style="height:100px;"'); ?>
                                                 </div> -->
-                                                
-                                                
-
+                                                                                               
                                                 <?php
                                                 if (!empty($addresses) && !$this->Staff) {
                                                     echo form_submit('add_order', lang('submit_order'), 'class="btn btn-theme"');
@@ -420,7 +417,7 @@
                                         } ?>
                                         <tr>
                                             <td><?= lang('shipping'); ?></td>
-                                            <td class="text-right" id='demo'><?= $this->sma->formatMoney($shipping, $selected_currency->symbol); ?></td>
+                                            <td class="text-right" id='total'><?= $this->sma->formatMoney($shipping, $selected_currency->symbol); ?></td>
                                             <!-- <td class="text-right"><?= $this->sma->formatMoney($shipping, $selected_currency->symbol); ?></td> -->
                                         </tr>
                                         <tr>
@@ -428,7 +425,7 @@
                                         </tr>
                                         <tr class="active text-bold">
                                             <td><?= lang('รวมทั้งหมด'); ?></td>
-                                            <td class="text-right" id='total'><?= $this->sma->formatMoney(($this->sma->formatDecimal($total) + $this->sma->formatDecimal($order_tax) + $this->sma->formatDecimal($shipping)), $selected_currency->symbol); ?></td>
+                                            <td class="text-right" id='totallast'><?= $this->sma->formatMoney(($this->sma->formatDecimal($total) + $this->sma->formatDecimal($order_tax) + $this->sma->formatDecimal($shipping)), $selected_currency->symbol); ?></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -441,16 +438,87 @@
         </div>
     </div>
     <script>
-        function myFunction() {
-            var val = document.querySelector('input[name="logistic_method"]:checked').value;
-            var total = '<?= $this->sma->formatMoney(($this->sma->formatDecimal($total) + $this->sma->formatDecimal($order_tax) + $this->sma->formatDecimal($shipping)), $selected_currency->symbol); ?>';
-            var totallast = parseInt(val) + parseInt(total);
-            document.getElementById('total').innerHTML = totallast;
-            document.getElementById("demo").innerHTML = val;
-        }
+        // function myFunction() {
+        //     var val = document.querySelector('input[name="logistic_method"]:checked').value;
+        //     var total = '<?= $this->sma->formatMoney(($this->sma->formatDecimal($total) + $this->sma->formatDecimal($order_tax) + $this->sma->formatDecimal($shipping)), $selected_currency->symbol); ?>';
+        //     var totallast = parseInt(val) + parseInt(total);
+        //     document.getElementById('total').innerHTML = totallast;
+        //     document.getElementById("demo").innerHTML = val;
+        // }
+
+        
+  $(".$logistic").click(function(event) {    
+
+    console.log(weight);
+
+// weight : น้ำหนัก หน่วยกรัม
+// pluskerry : ค่าที่เพิ่มขอบ kerry
+// plusflash : ค่าที่เพิ่มของ flash
+const calulatePriceFWeight = function(weight,plusems,plusflash){
+  var result = {'flash':0,'ems':0};
+  var weightlist = [
+    {'weight':250,'cost':20},
+    {'weight':500,'cost':25},
+    {'weight':1000,'cost':50},
+    {'weight':1500,'cost':60},
+    {'weight':2000,'cost':70},
+    {'weight':2500,'cost':120},
+    {'weight':3000,'cost':130},
+    {'weight':3500,'cost':150},
+    {'weight':4000,'cost':160},
+    {'weight':4500,'cost':190},
+    {'weight':5000,'cost':210},
+    {'weight':5500,'cost':240},
+    {'weight':6000,'cost':260},
+    {'weight':6500,'cost':290},
+    {'weight':7000,'cost':310},
+    {'weight':7500,'cost':340},
+    {'weight':8000,'cost':360},
+    {'weight':8500,'cost':390},
+    {'weight':9000,'cost':420},
+    {'weight':9500,'cost':450},
+    {'weight':10000,'cost':480},
+    {'weight':11000,'cost':500},
+    {'weight':12000,'cost':510},
+    {'weight':13000,'cost':530},
+    {'weight':14000,'cost':540},
+    {'weight':15000,'cost':560},
+    {'weight':16000,'cost':570},
+    {'weight':17000,'cost':590},
+    {'weight':18000,'cost':600},
+    {'weight':19000,'cost':620},
+    {'weight':20000,'cost':630}]
+  for(let k in weightlist){
+    if(weight<=weightlist[k].weight){
+      result.flash = weightlist[k].cost + plusflash;
+      result.ems = weightlist[k].cost + plusems;
+      break;
+    }
+  }
+  console.log(result);
+  return result;
+};
+var res = calulatePriceFWeight(700,5,0);
+
+var fee = 0;
+// var fl = 40;
+if($(this).val()=="postems"){
+fee = res.ems;
+
+}else if($(this).val()=="dropoff"){
+fee = 10;
+}else if($(this).val()=="flash"){
+fee = res.flash;
+}else{
+fee = 0;
+}
+
+    $("#shipping_fee").html("฿"+ fee.toFixed(2))
+    var total = $("#total").text().match(/\d+/)[0]
+    var grand_total = parseFloat(fee) + parseFloat(total)
+    $("#grand_total").html("฿"+ grand_total.toFixed(2))
+    document.getElementById('grand_total').innerHTML = totallast;
+  });
+
     </script>
-
-
-
-
 </section>

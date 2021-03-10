@@ -662,4 +662,52 @@ class Shop_model extends CI_Model
         $views = is_numeric($views) ? ($views + 1) : 1;
         return $this->db->update('products', ['views' => $views], ['id' => $id]);
     }
+
+    // public function addaddress_logistic($data)
+    // {
+    //     $this->db->insert('address_logistic',$data);
+    //       return $this->db->insert_id();
+    // }
+    // public function addaddress_logistic($data)
+    // {
+    //     if ($this->db->insert('address_logistic', $data)) {
+    //         return $this->db->insert_id();
+    //     }
+    //     return false;
+    // }
+//---------------------------------------------------------address logistic
+    // public function getAlladdress_logistic()
+    // {
+    //     $q = $this->db->get('address_logistic');
+    //     if ($q->num_rows() > 0) {
+    //         foreach (($q->result()) as $row) {
+    //             $data[] = $row;
+    //         }
+    //         return $data;
+    //     }
+    //     return false;
+    // }
+   
+    public function getAddress_logistic()
+    {
+        return $this->db->get_where('address_logistic', ['company_id' => $this->session->userdata('company_id')])->result();
+    }
+
+    // public function getAlladdress_receiver()
+    // {
+    //     $q = $this->db->get('address_receiver');
+    //     if ($q->num_rows() > 0) {
+    //         foreach (($q->result()) as $row) {
+    //             $data[] = $row;
+    //         }
+    //         return $data;
+    //     }
+    //     return false;
+    // }
+    public function getAddress_receiver()
+    {
+        return $this->db->get_where('address_receiver', ['company_id' => $this->session->userdata('company_id')])->result();
+    }
+
+
 }

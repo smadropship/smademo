@@ -294,6 +294,13 @@
                                     ?>
                             <li class="<?= $m == 'cart_ajax' && $v == 'index' ? 'active' : ''; ?>"><a href="<?= site_url('cart'); ?>"><?= lang('shopping_cart'); ?></a></li>
                             <li class="<?= $m == 'cart_ajax' && $v == 'checout' ? 'active' : ''; ?>"><a href="<?= site_url('cart/checkout'); ?>"><?= lang('checkout'); ?></a></li>
+                            <li class="<?= $m == 'cart_ajax' && $v == 'checout' ? 'active' : ''; ?>"><a href="<?= site_url('shop/logistic'); ?>"><?= lang('รายการพัสดุ'); ?></a></li>
+                            <li class="<?= $m == 'cart_ajax' && $v == 'checout' ? 'active' : ''; ?>"><a href="<?= site_url('shop/howtosend'); ?>"><?= lang('วิธีส่งพัสดุ'); ?></a></li>
+                            <li class="<?= $m == 'cart_ajax' && $v == 'checout' ? 'active' : ''; ?>"><a href="<?= site_url('shop/howtotopup'); ?>"><?= lang('วิธีเติมเงิน'); ?></a></li>
+                            <li class="<?= $m == 'cart_ajax' && $v == 'checout' ? 'active' : ''; ?>"><a href="<?= site_url('shop/address_logistic'); ?>"><?= lang('ที่อยู่ผู้ส่ง'); ?></a></li>
+                            <li class="<?= $m == 'cart_ajax' && $v == 'checout' ? 'active' : ''; ?>"><a href="<?= site_url('shop/address_receiver')?>"><?= lang('ที่อยู่ผู้รับ'); ?></a></li>
+                            <li class="<?= $m == 'cart_ajax' && $v == 'checout' ? 'active' : ''; ?>"><a href=""><?= lang('การเงิน'); ?></a></li>
+                            
                             <?php
                                 } ?>
                         </ul>

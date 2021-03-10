@@ -14,6 +14,11 @@ $route['product/(:any)']         = 'shop/shop/product/$1';
 $route['category/(:any)']        = 'shop/shop/products/$1';
 $route['brand/(:any)']           = 'shop/shop/products/0/0/$1';
 $route['category/(:any)/(:any)'] = 'shop/shop/products/$1/$2';
+// $route['shop/logistic']          = 'shop/shop/logistic';
+
+
+// //logistic
+// $route['logistic']        = 'Logistic';
 
 // Page route
 $route['page/(:any)'] = 'shop/shop/page/$1';

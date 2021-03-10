@@ -85,12 +85,12 @@
                                 <div class="row" style="margin-bottom:15px;">
 
                                     <div class="col-xs-6">
-                                        <?php echo $this->lang->line('billing'); ?>:<br/>
-                                        <h2 style="margin-top:10px;"><?= $customer->company && $customer->company != '-' ? $customer->company : $customer->name; ?></h2>
-                                        <?= $customer->company ? '' : 'Attn: ' . $customer->name ?>
+                                        <?php echo $this->lang->line('ตัวแทน '); ?>:<br/>
+                                        <!-- <h2 style="margin-top:10px;"><?= $customer->company && $customer->company != '-' ? $customer->company : $customer->name; ?></h2>
+                                        <?= $customer->company ? '' : 'Attn: ' . $customer->name ?> -->
 
                                         <?php
-                                        echo $customer->address . '<br>' . $customer->city . ' ' . $customer->postal_code . ' ' . $customer->state . '<br>' . $customer->country;
+                                        echo '<br>' . $customer->name . '<br>' . $customer->address . '<br>' . $customer->city . ' ' . $customer->postal_code . ' ' . $customer->state . '<br>' . $customer->country;
 
                                         echo '<p>';
 
@@ -123,10 +123,12 @@
                                     <?php if ($address) {
                                             ?>
                                     <div class="col-xs-6">
-                                        <?php echo $this->lang->line('shipping'); ?>:
-                                        <h2 style="margin-top:10px;"><?= $customer->company && $customer->company != '-' ? $customer->company : $customer->name; ?></h2>
-                                        <?= $customer->company ? '' : 'Attn: ' . $customer->name ?>
+                                        <?php echo $this->lang->line('ลูกค้า '); ?>:
+                                        <!-- <h2 style="margin-top:10px;"><?= $customer->company && $customer->company != '-' ? $customer->company : $customer->name; ?></h2>
+                                        <?= $customer->company ? '' : 'Attn: ' . $customer->name ?> -->
+                                        
                                         <p>
+                                        <br>
                                             <?= lang('ชื่อ-นามสกุล ') . ': ' . $address->line1; ?><br>
                                             <?= lang('ที่อยู่ ') . ': ' . $address->line2; ?><br>
                                             <?= lang('จังหวัด ') . ': ' . $address->city; ?> 
@@ -372,14 +374,14 @@
                                         echo form_close();
                                         echo '</div><hr class="divider or">';
                                     }
-                                    echo '<div class="payment_buttons">';
-                                    $btn_code = '<div id="payment_buttons" class="text-center margin010">';
-                                    if ($paypal->active == '1' && $inv->grand_total != '0.00') {
-                                        $btn_code .= '<a href="' . site_url('pay/paypal/' . $inv->id) . '"><img src="' . base_url('assets/images/btn-paypal.png') . '" alt="Pay by PayPal"></a> ';
-                                    }
-                                    if ($skrill->active == '1' && $inv->grand_total != '0.00') {
-                                        $btn_code .= ' <a href="' . site_url('pay/skrill/' . $inv->id) . '"><img src="' . base_url('assets/images/btn-skrill.png') . '" alt="Pay by Skrill"></a>';
-                                    }
+                                    // echo '<div class="payment_buttons">';
+                                    // $btn_code = '<div id="payment_buttons" class="text-center margin010">';
+                                    // if ($paypal->active == '1' && $inv->grand_total != '0.00') {
+                                    //     $btn_code .= '<a href="' . site_url('pay/paypal/' . $inv->id) . '"><img src="' . base_url('assets/images/btn-paypal.png') . '" alt="Pay by PayPal"></a> ';
+                                    // }
+                                    // if ($skrill->active == '1' && $inv->grand_total != '0.00') {
+                                    //     $btn_code .= ' <a href="' . site_url('pay/skrill/' . $inv->id) . '"><img src="' . base_url('assets/images/btn-skrill.png') . '" alt="Pay by Skrill"></a>';
+                                    // }
 
                                     if ($shop_settings->stripe == 1 && $stripe_publishable_key) {
                                         ?>
