@@ -200,12 +200,12 @@ class Shop_model extends CI_Model
     {
         if ($this->loggedIn) {
             $this->db->select("{$this->db->dbprefix('sale_items')}.product_id, {$this->db->dbprefix('sale_items')}.product_code, {$this->db->dbprefix('sale_items')}.product_name, {$this->db->dbprefix('sale_items')}.product_type")
-            ->distinct()
-            ->join('sale_items', 'sales.id=sale_items.sale_id', 'left')
-            ->where('sales.sale_status', 'completed')->where('sales.payment_status', 'paid')
-            ->where('sales.customer_id', $this->session->userdata('company_id'))
-            ->where('sale_items.product_type', 'digital')
-            ->order_by('sales.id', 'desc')->limit($limit, $offset);
+                ->distinct()
+                ->join('sale_items', 'sales.id=sale_items.sale_id', 'left')
+                ->where('sales.sale_status', 'completed')->where('sales.payment_status', 'paid')
+                ->where('sales.customer_id', $this->session->userdata('company_id'))
+                ->where('sale_items.product_type', 'digital')
+                ->order_by('sales.id', 'desc')->limit($limit, $offset);
             if ($product_id) {
                 $this->db->where('sale_items.product_id', $product_id);
             }
@@ -217,7 +217,7 @@ class Shop_model extends CI_Model
     public function getDownloadsCount()
     {
         $this->db->select("{$this->db->dbprefix('sale_items')}.product_id, {$this->db->dbprefix('sale_items')}.product_code, {$this->db->dbprefix('sale_items')}.product_name, {$this->db->dbprefix('sale_items')}.product_type")
-        ->distinct()
+            ->distinct()
             ->join('sale_items', 'sales.id=sale_items.sale_id', 'left')
             ->where('sales.sale_status', 'completed')->where('sales.payment_status', 'paid')
             ->where('sales.customer_id', $this->session->userdata('company_id'))
@@ -228,11 +228,11 @@ class Shop_model extends CI_Model
     public function getFeaturedProducts($limit = 16, $promo = true)
     {
         $this->db->select("{$this->db->dbprefix('products')}.id as id, {$this->db->dbprefix('products')}.name as name, {$this->db->dbprefix('products')}.code as code, {$this->db->dbprefix('products')}.image as image, {$this->db->dbprefix('products')}.slug as slug, {$this->db->dbprefix('products')}.price, quantity, type, promotion, promo_price, start_date, end_date, b.name as brand_name, b.slug as brand_slug, c.name as category_name, c.slug as category_slug")
-        ->join('brands b', 'products.brand=b.id', 'left')
-        ->join('categories c', 'products.category_id=c.id', 'left')
-        ->where('products.featured', 1)
-        ->where('hide !=', 1)
-        ->limit($limit);
+            ->join('brands b', 'products.brand=b.id', 'left')
+            ->join('categories c', 'products.category_id=c.id', 'left')
+            ->where('products.featured', 1)
+            ->where('hide !=', 1)
+            ->limit($limit);
 
         $sp = $this->getSpecialPrice();
         if ($sp->cgp) {
@@ -252,7 +252,7 @@ class Shop_model extends CI_Model
     {
         $date = date('Y-m-d H:i:s', time());
         $this->db->where('from_date <=', $date)
-        ->where('till_date >=', $date)->where('scope !=', 2);
+            ->where('till_date >=', $date)->where('scope !=', 2);
         return $this->db->get('notifications')->result();
     }
 
@@ -284,12 +284,23 @@ class Shop_model extends CI_Model
     {
         if ($this->loggedIn) {
             $this->db->select('sales.*, deliveries.status as delivery_status')
-            ->join('deliveries', 'deliveries.sale_id=sales.id', 'left')
-            ->order_by('id', 'desc')->limit($limit, $offset);
+                ->join('deliveries', 'deliveries.sale_id=sales.id', 'left')
+                ->order_by('id', 'desc')->limit($limit, $offset);
             return $this->db->get_where('sales', ['customer_id' => $this->session->userdata('company_id')])->result();
         }
         return false;
     }
+
+    // public function getLogistic($limit=null, $offset=null)
+    // {
+    //     if ($this->loggedIn) {
+    //         $this->db->select('send_logistics.*, address_logistic.*,address_receiver.*')
+    //         ->join('deliveries', 'deliveries.sale_id=sales.id', 'left')
+    //         ->order_by('id', 'desc')->limit($limit, $offset);
+    //         return $this->db->get_where('sales', ['customer_id' => $this->session->userdata('company_id')])->result();
+    //     }
+    //     return false;
+    // }
 
     public function getOrdersCount()
     {
@@ -300,11 +311,11 @@ class Shop_model extends CI_Model
     public function getOtherProducts($id, $category_id, $brand)
     {
         $this->db->select("{$this->db->dbprefix('products')}.id as id, {$this->db->dbprefix('products')}.name as name, {$this->db->dbprefix('products')}.code as code, {$this->db->dbprefix('products')}.image as image, {$this->db->dbprefix('products')}.slug as slug, {$this->db->dbprefix('products')}.price, quantity, type, promotion, promo_price, start_date, end_date, b.name as brand_name, b.slug as brand_slug, c.name as category_name, c.slug as category_slug")
-        ->join('brands b', 'products.brand=b.id', 'left')
-        ->join('categories c', 'products.category_id=c.id', 'left')
-        ->where('category_id', $category_id)->where('brand', $brand)
-        ->where('products.id !=', $id)->where('hide !=', 1)
-        ->order_by('rand()')->limit(4);
+            ->join('brands b', 'products.brand=b.id', 'left')
+            ->join('categories c', 'products.category_id=c.id', 'left')
+            ->where('category_id', $category_id)->where('brand', $brand)
+            ->where('products.id !=', $id)->where('hide !=', 1)
+            ->order_by('rand()')->limit(4);
 
         $sp = $this->getSpecialPrice();
         if ($sp->cgp) {
@@ -410,10 +421,10 @@ class Shop_model extends CI_Model
     public function getProducts($filters = [])
     {
         $this->db->select("{$this->db->dbprefix('products')}.id as id, {$this->db->dbprefix('products')}.name as name, {$this->db->dbprefix('products')}.code as code, {$this->db->dbprefix('products')}.image as image, {$this->db->dbprefix('products')}.slug as slug, {$this->db->dbprefix('products')}.price, {$this->db->dbprefix('warehouses_products')}.quantity as quantity, type, promotion, promo_price, start_date, end_date, product_details as details")
-        ->from('products')
-        ->join('warehouses_products', 'products.id=warehouses_products.product_id', 'left')
-        ->where('warehouses_products.warehouse_id', $this->shop_settings->warehouse)
-        ->group_by('products.id');
+            ->from('products')
+            ->join('warehouses_products', 'products.id=warehouses_products.product_id', 'left')
+            ->where('warehouses_products.warehouse_id', $this->shop_settings->warehouse)
+            ->group_by('products.id');
 
         $sp = $this->getSpecialPrice();
         if ($sp->cgp) {
@@ -426,7 +437,7 @@ class Shop_model extends CI_Model
             $this->db->where('warehouses_products.quantity >', 0);
         }
         $this->db->where('hide !=', 1)
-        ->limit($filters['limit'], $filters['offset']);
+            ->limit($filters['limit'], $filters['offset']);
         if (!empty($filters)) {
             if (!empty($filters['promo'])) {
                 $today = date('Y-m-d');
@@ -471,9 +482,9 @@ class Shop_model extends CI_Model
     public function getProductsCount($filters = [])
     {
         $this->db->select("{$this->db->dbprefix('products')}.id as id")
-        ->join('warehouses_products', 'products.id=warehouses_products.product_id', 'left')
-        ->where('warehouses_products.warehouse_id', $this->shop_settings->warehouse)
-        ->group_by('products.id');
+            ->join('warehouses_products', 'products.id=warehouses_products.product_id', 'left')
+            ->where('warehouses_products.warehouse_id', $this->shop_settings->warehouse)
+            ->group_by('products.id');
 
         $sp = $this->getSpecialPrice();
         if ($sp->cgp) {
@@ -675,7 +686,7 @@ class Shop_model extends CI_Model
     //     }
     //     return false;
     // }
-//---------------------------------------------------------address logistic
+    //---------------------------------------------------------address logistic
     // public function getAlladdress_logistic()
     // {
     //     $q = $this->db->get('address_logistic');
@@ -687,7 +698,7 @@ class Shop_model extends CI_Model
     //     }
     //     return false;
     // }
-   
+
     public function getAddress_logistic()
     {
         return $this->db->get_where('address_logistic', ['company_id' => $this->session->userdata('company_id')])->result();
@@ -709,5 +720,18 @@ class Shop_model extends CI_Model
         return $this->db->get_where('address_receiver', ['company_id' => $this->session->userdata('company_id')])->result();
     }
 
+    public function getSend_logistic()
+    {
+        return $this->db->get_where('send_logistics', ['company_id' => $this->session->userdata('company_id')])->result();
+    }
 
+    public function getAddress_logisticByID($id)
+    {
+        return $this->db->get_where('address_logistic', ['id' => $id], 1)->row();
+    }
+
+    public function  getAddress_receiverByID($id)
+    {
+        return $this->db->get_where('address_receiver', ['id' => $id], 1)->row();
+    }
 }

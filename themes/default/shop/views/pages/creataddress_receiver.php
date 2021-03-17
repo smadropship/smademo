@@ -10,29 +10,29 @@
                     <h1 class="text-center">ผู้รับ</h1>
                 </div>
                 <div class="modal-body">
-                <?php
-                     echo form_open('shop/creat_address_receiver');
-            
-                     echo form_label('ชื่อผู้ส่ง'); 
-                     echo form_input(array('class'=>'form-control input-lg','name'=>'name')); 
-                     echo "<br/>"; 
-                     
-                     echo form_label('เบอร์โทร'); 
-                     echo form_input(array('class'=>'form-control input-lg','name'=>'phone_number')); 
-                     echo "<br/>"; 
+                    <?php
+                    echo form_open('shop/creat_address_receiver');
 
-                     echo form_label('ที่อยู่'); 
-                     echo form_input(array('class'=>'form-control input-lg','name'=>'address')); 
-                     echo "<br/>";
+                    echo form_label('ชื่อผู้รับ');
+                    echo form_input(array('class' => 'form-control input-lg', 'name' => 'name'));
+                    echo "<br/>";
 
-                     echo form_label('รหัสไปรษณี'); 
-                     echo form_input(array('class'=>'form-control input-lg','name'=>'postal_code')); 
-                     echo "<br/>";
+                    echo form_label('เบอร์โทร');
+                    echo form_input(array('class' => 'form-control input-lg', 'name' => 'phone_number'));
+                    echo "<br/>";
 
-                     echo form_submit(array('id'=>'submit','value'=>'บันทึก','class'=>'btn btn-success'));
-                     echo form_close(); 
-                ?>
-<!-- 
+                    echo form_label('ที่อยู่');
+                    echo form_input(array('class' => 'form-control input-lg', 'name' => 'address'));
+                    echo "<br/>";
+
+                    echo form_label('รหัสไปรษณี');
+                    echo form_input(array('class' => 'form-control input-lg', 'name' => 'postal_code'));
+                    echo "<br/>";
+
+                    echo form_submit(array('id' => 'submit', 'value' => 'บันทึก', 'class' => 'btn btn-success'));
+                    echo form_close();
+                    ?>
+                    <!-- 
                     <form action="<?= site_url('shop/creat_address'); ?>" method="POST" class="form col-md-12 center-block">
                         <div class="form-group">
                             <input type="text" class="form-control input-lg" name="name" placeholder="ชื่อผู้ส่ง" required="required">

@@ -1,37 +1,37 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <section class="page-contents">
     <center>
-    <div class="card-body">
-        <h2>การจัดการข้อมูลที่อยู่ผู้รับ</h2>
-        <a href="<?= site_url('shop/addaddress_receiver'); ?>" class="btn btn-primary">เพิ่มที่อยู่</a>
-        <table class="table table-striped" style="width:70%">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>ชื่อ</th>
-                    <th>ที่อยู่</th>
-                    <th>เบอร์โทร</th>
-                    <th>รหัสไปรษณี</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                foreach ($address_receivers as $r) {
-                    echo "<tr>";
-                    echo "<td>" . $r->id . "</td>";
-                    echo "<td>" . $r->name . "</td>";
-                    echo "<td>" . $r->address . "</td>";
-                    echo "<td>" . $r->phone_number . "</td>";
-                    echo "<td>" . $r->postal_code . "</td>";
-                    // echo "<td><a href='" . base_url() . "index.php/customer/edit_customer_form/" . $r->id . "' class='btn btn-primary'>Edit</a></td>";
-                    echo "<td><a href='" . base_url() . "shop/delete_receiver/" . $r->id . "' onclick='return confirm(\"Confirm Delete Item\")' class='btn btn-danger'>Delete</a></td>";
+        <div class="card-body">
+            <h2>การจัดการข้อมูลที่อยู่ผู้รับ</h2>
+            <a href="<?= site_url('shop/addaddress_receiver'); ?>" class="btn btn-primary">เพิ่มที่อยู่</a>
+            <table class="table table-striped" style="width:70%">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>ชื่อ</th>
+                        <th>ที่อยู่</th>
+                        <th>เบอร์โทร</th>
+                        <th>รหัสไปรษณี</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($address_receivers as $r) {
+                        echo "<tr>";
+                        echo "<td>" . $r->id . "</td>";
+                        echo "<td>" . $r->name . "</td>";
+                        echo "<td>" . $r->address . "</td>";
+                        echo "<td>" . $r->phone_number . "</td>";
+                        echo "<td>" . $r->postal_code . "</td>";
+                        // echo "<td><a href='" . base_url() . "index.php/customer/edit_customer_form/" . $r->id . "' class='btn btn-primary'>Edit</a></td>";
+                        echo "<td><a href='" . base_url() . "shop/delete_receiver/" . $r->id . "' onclick='return confirm(\"Confirm Delete Item\")' class='btn btn-danger'>Delete</a></td>";
 
-                    echo "</tr>";
-                }
-                ?>
-            </tbody>
-        </table>
-    </div>
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </center>
 </section>
 <style>
